@@ -5,11 +5,31 @@ let secondImageElement = document.getElementById('second-image');
 let thirdImageElement = document.getElementById('third-image');
 
 
+
 let maxAttempts = 25;
 let userAttemptsCounter=0;
 let firstImageIndex ;
 let secondImageIndex;
 let thirdImageIndex;
+let productNames=[];
+let productVotes=[];
+let productShown=[];
+
+function ifRepeat(a, b, c){
+  let threevar=[a, b, c]
+  for(let i=0; i<threevar.length; i++){
+     if(a===b || a===c || b===c) { return true;
+
+     }
+     else{return false}
+  }
+}
+
+console.log(ifRepeat())
+ifRepeat(firstImageIndex,secondImageIndex,thirdImageIndex);
+
+
+
 
 
 
@@ -18,7 +38,9 @@ function Products(product,source, repetitions){
     this.source = source;
     this.repetitions = repetitions;
     this.votes = 0;
+    this.shown=0;
     Products.allImages.push(this);
+    productNames.push(product)
 }
 
 Products.allImages = [];
@@ -60,18 +82,23 @@ function displayThreeImages() {
     do{
         secondImageIndex=randomProduct();
         thirdImageIndex=randomProduct();
-       }while (firstImageIndex === secondImageIndex || firstImageIndex=== thirdImageIndex || secondImageIndex===thirdImageIndex)
+       }while (firstImageIndex === secondImageIndex || firstImageIndex=== thirdImageIndex || secondImageIndex===thirdImageIndex || ifRepeat(firstImageIndex,secondImageIndex,thirdImageIndex ))
      
      
        Products.allImages
        console.log(Products.allImages[firstImageIndex]);
      
        firstImageElement.src = Products.allImages[firstImageIndex].source;
-       
+       Products.allImages[firstImageIndex].shown++
+
        secondImageElement.src = Products.allImages[secondImageIndex].source;
+       Products.allImages[secondImageIndex].shown++
+
        console.log(thirdImageIndex);
 
        thirdImageElement.src = Products.allImages[thirdImageIndex].source;
+       Products.allImages[thirdImageIndex].shown++
+
        
      }
      
@@ -123,17 +150,62 @@ else{
     firstImageElement.removeEventListener('click',userClick);
 
 
+
+    for (let i=0; i<Products.allImages.length; i++){
+      productVotes.push(Products.allImages[i].votes)
+      productShown.push(Products.allImages[i].shown)
+      
+    }
+    viewChart();
+
+
     }
  
 
-}
+  }
 
 }
 
+function viewChart (){
+
+ let ctx = document.getElementById('myChart').getContext('2d');
+ let chart = new Chart(ctx, {
+     
+     type: 'bar',
+ 
+     
+     data: {
+         labels: productNames,
+         datasets: [
+
+           {
+             label: 'Product votes',
+             backgroundColor: 'rgb(255, 99, 132)',
+             borderColor: 'rgb(255, 99, 132)',
+             data: productVotes
+         },
+
+         {
+          label: 'Products shown',
+          backgroundColor: 'black',
+          borderColor: 'black',
+          data: productShown
+         }
+
+        
+        ]
+     },
+ 
+     
+     options: {}
+ });
+
+}
+ 
 
 
 
-  let button = document.getElementById('button');
+ /* let button = document.getElementById('button');
   button.addEventListener('click', result);
   function result(){
     let list=document.getElementById('results-list');
@@ -146,9 +218,4 @@ else{
 
 
   }
-
-
- 
-
-
-
+  */
