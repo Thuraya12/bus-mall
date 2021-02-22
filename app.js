@@ -88,7 +88,7 @@ thirdImageElement.addEventListener('click',userClick);
 
 
 function userClick(event) {
-  // give the user 10 tries to click after that show result
+  
   userAttemptsCounter++;
 
   console.log(event.target.id);
@@ -96,7 +96,7 @@ function userClick(event) {
 
 
   if(userAttemptsCounter<maxAttempts){
-    // make sure to add to votes for the correct element and render again
+    
     if(event.target.id ==='first-image'){
       Products.allImages[firstImageIndex].votes++
 
@@ -109,8 +109,8 @@ function userClick(event) {
     displayThreeImages();
 
   }
-  else{
-    // render the list of results
+else{
+    
     let list=document.getElementById('results-list');
     let productResult;
     for(let i=0;i<Products.allImages.length;i++){
@@ -123,7 +123,7 @@ function userClick(event) {
     firstImageElement.removeEventListener('click',userClick);
 
 
-  }
+    }
  
 
 }
