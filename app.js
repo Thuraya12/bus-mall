@@ -25,7 +25,7 @@ function ifRepeat(a, b, c){
   }
 }
 
-console.log(ifRepeat())
+
 ifRepeat(firstImageIndex,secondImageIndex,thirdImageIndex);
 
 
